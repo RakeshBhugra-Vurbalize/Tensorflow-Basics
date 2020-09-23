@@ -1,10 +1,11 @@
 import tensorflow as tf
+import numpy as np
 mnist = tf.keras.datasets.mnist
 
 #Callback
 class myCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
-        if(logs.get('accuracy')>0.8):
+        if(logs.get('accuracy')>0.95):
             print("\n Reached 80% accuracy so cancelling training!\n")
             self.model.stop_training = True
 
@@ -28,5 +29,8 @@ model.compile(optimizer=tf.keras.optimizers.Adam(),
 model.fit(x=training_images, y=training_labels  ,epochs=50, callbacks=[callbacks])
 
 classification = model.predict(test_images)
-classification[0]
+print(np.argmax(classification[0]))
 print(test_labels[0])
+
+print(np.argmax(classification[5]))
+print(test_labels[5])
