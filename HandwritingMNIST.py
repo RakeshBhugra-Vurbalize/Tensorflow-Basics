@@ -5,7 +5,7 @@ mnist = tf.keras.datasets.mnist
 #Callback
 class myCallback(tf.keras.callbacks.Callback):
     def on_epoch_end(self, epoch, logs={}):
-        if(logs.get('accuracy')>0.95):
+        if(logs.get('accuracy')>0.99):
             print("\n Reached 80% accuracy so cancelling training!\n")
             self.model.stop_training = True
 
@@ -26,7 +26,11 @@ model.compile(optimizer=tf.keras.optimizers.Adam(),
               loss=tf.keras.losses.sparse_categorical_crossentropy,
               metrics=['accuracy'])
 
-model.fit(x=training_images, y=training_labels  ,epochs=50, callbacks=[callbacks])
+print(model.summary())
+
+model.fit(x=training_images, y=training_labels ,epochs=50, callbacks=[callbacks])
+
+model.evaluate(x=test_images, y=test_labels)
 
 classification = model.predict(test_images)
 print(np.argmax(classification[0]))
