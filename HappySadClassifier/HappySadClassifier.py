@@ -98,3 +98,21 @@ history = model.fit(
     verbose = 1,
     callbacks=[callbacks]
 )
+
+#Check
+from tensorflow.keras.preprocessing import image
+path = 'HappySadClassifier/data/happy-or-sad/sad/sad1-00.png'
+img = image.load_img(path, target_size=(150,150))
+plt.imshow(img)
+plt.show()
+x=image.img_to_array(img)
+print(x.shape)
+x = np.expand_dims(x, axis=0)
+print(x.shape)
+images = np.vstack([x])
+classes = model.predict(images)
+print(classes)
+if classes[0]>0.5:
+    print('Sad')
+else:
+    print('Happy')
